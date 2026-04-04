@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeetCode Analyzer — Settings</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div class="header">
+    <span class="logo">🧠</span>
+    <h1>LeetCode Analyzer</h1>
+</div>
+
+<div class="section">
+    <label for="provider">AI Provider</label>
+    <select id="provider">
+        <option value="groq">Groq</option>
+        <option value="gemini">Google Gemini</option>
+        <option value="openai">OpenAI</option>
+        <option value="custom">Custom (OpenAI-compatible)</option>
+    </select>
+</div>
+
+<div class="section" id="endpointSection" style="display:none;">
+    <label for="endpoint">API Endpoint</label>
+    <input type="url" id="endpoint" placeholder="https://api.example.com/v1/chat/completions">
+</div>
+
+<div class="section">
+    <label for="apiKey">API Key</label>
+    <div class="key-input">
+        <input type="password" id="apiKey" placeholder="Enter your API key">
+        <button id="toggleKey" class="icon-btn" title="Show/hide key">see</button>
+    </div>
+</div>
+
+<div class="section">
+    <label for="model">Model</label>
+    <input type="text" id="model" placeholder="e.g. llama-3.3-70b-versatile">
+    <p class="hint" id="modelHint"></p>
+</div>
+
+<button id="saveBtn" class="primary-btn">Save Settings</button>
+
+<div id="status" class="status"></div>
+
+<div class="footer">
+    <p>Your API key is stored locally and never leaves your browser.</p>
+</div>
+
+<script src="popup.js"></script>
+
+</body>
+</html>

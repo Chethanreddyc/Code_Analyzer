@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Code Analyzer",
+  "version": "2.0",
+  "description": "Analyze code with AI on LeetCode, CodeChef & HackerRank — complexity, approach, and rating.",
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "https://www.codechef.com/*",
+    "https://www.hackerrank.com/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://leetcode.com/problems/*",
+        "https://www.codechef.com/problems/*",
+        "https://www.codechef.com/submit/*",
+        "https://www.hackerrank.com/challenges/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": [
+        "https://leetcode.com/*",
+        "https://www.codechef.com/*",
+        "https://www.hackerrank.com/*"
+      ]
+    }
+  ]
+}
