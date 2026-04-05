@@ -220,6 +220,52 @@ function injectStyles() {
             font-size: 11px;
         }
 
+        /* optimal complexity section */
+        .lce-optimal {
+            margin-top: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 11.5px;
+            line-height: 1.6;
+        }
+        .lce-optimal-match {
+            background: rgba(74, 222, 128, 0.06);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            color: #86d9a0;
+        }
+        .lce-optimal-diff {
+            background: rgba(251, 191, 36, 0.06);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+            color: #d4c074;
+        }
+        .lce-optimal strong {
+            font-size: 11px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .lce-optimal-match strong { color: #4ade80; }
+        .lce-optimal-diff strong { color: #fbbf24; }
+        .lce-optimal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+            margin-top: 4px;
+        }
+        .lce-optimal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        .lce-optimal-label {
+            opacity: 0.7;
+        }
+        .lce-optimal-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+        }
+
         /* skeleton */
         .lce-card-skeleton .lce-row-value {
             background: linear-gradient(90deg,
@@ -307,7 +353,8 @@ function showLoadingCard() {
         <div class="lce-card-skeleton">
             <div class="lce-row"><span class="lce-row-label">Time</span><span class="lce-row-value"></span></div>
             <div class="lce-row"><span class="lce-row-label">Space</span><span class="lce-row-value"></span></div>
-            <div class="lce-row"><span class="lce-row-label">Approach</span><span class="lce-row-value"></span></div>
+            <div class="lce-row"><span class="lce-row-label">Best Time</span><span class="lce-row-value"></span></div>
+            <div class="lce-row"><span class="lce-row-label">Best Space</span><span class="lce-row-value"></span></div>
             <div class="lce-row"><span class="lce-row-label">Approach</span><span class="lce-row-value"></span></div>
             <div class="lce-row"><span class="lce-row-label">Code</span><span class="lce-row-value"></span></div>
         </div>
@@ -325,6 +372,13 @@ function showResultCard(data) {
 
     const approachR = data.approachRating ?? "?";
     const codeR = data.codeRating ?? "?";
+
+    // Determine if user's solution is already optimal
+    const bestTime = data.bestTime || data.time || "?";
+    const bestSpace = data.bestSpace || data.space || "?";
+    const isTimeOptimal = data.time && data.bestTime && data.time.trim() === data.bestTime.trim();
+    const isSpaceOptimal = data.space && data.bestSpace && data.space.trim() === data.bestSpace.trim();
+    const isFullyOptimal = isTimeOptimal && isSpaceOptimal;
 
     let html = `
         <div class="lce-row">
@@ -346,6 +400,26 @@ function showResultCard(data) {
         <div class="lce-row">
             <span class="lce-row-label">💻 Code</span>
             <span class="lce-rating ${ratingClass(codeR)}">${codeR}/10</span>
+        </div>
+    `;
+
+    // Optimal complexity section
+    const optClass = isFullyOptimal ? "lce-optimal-match" : "lce-optimal-diff";
+    const optIcon = isFullyOptimal ? "✅" : "🎯";
+    const optLabel = isFullyOptimal ? "Your solution is optimal!" : "Best Possible Complexity";
+    html += `
+        <div class="lce-optimal ${optClass}">
+            <strong>${optIcon} ${optLabel}</strong>
+            <div class="lce-optimal-grid">
+                <div class="lce-optimal-item">
+                    <span class="lce-optimal-label">⏱ Time</span>
+                    <span class="lce-optimal-val">${escapeHtml(bestTime)}</span>
+                </div>
+                <div class="lce-optimal-item">
+                    <span class="lce-optimal-label">💾 Space</span>
+                    <span class="lce-optimal-val">${escapeHtml(bestSpace)}</span>
+                </div>
+            </div>
         </div>
     `;
 

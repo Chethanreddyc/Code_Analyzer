@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function callAI(config, code) {
-    const prompt = `Analyze this code. Reply ONLY valid JSON, nothing else:\n{"time":"O(?)","space":"O(?)","approaches":["name"],"approachRating":0,"codeRating":0,"suggestion":"text or null","bestApproach":"Name the optimal approach for this problem and explain in 1 short sentence why it is best"}\n\nCode:\n${code}`;
+    const prompt = `Analyze this code. Reply ONLY valid JSON, nothing else:\n{"time":"O(?)","space":"O(?)","bestTime":"O(?)","bestSpace":"O(?)","approaches":["name"],"approachRating":0,"codeRating":0,"suggestion":"text or null","bestApproach":"Name the optimal approach for this problem and explain in 1 short sentence why it is best"}\nIMPORTANT: "time" and "space" are the complexity of the given code. "bestTime" and "bestSpace" are the best possible (optimal) time and space complexity achievable for this problem by any algorithm. If the given code is already optimal, bestTime/bestSpace should match time/space.\n\nCode:\n${code}`;
 
     if (config.provider === "gemini") {
         return callGemini(config, prompt);
