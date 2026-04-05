@@ -556,7 +556,7 @@ async function handleAnalyze() {
     });
 
     if (!extractedCode) {
-        showErrorCard("Could not extract code from editor.");
+        showErrorCard("Could not extract code from editor. Please reload the page.");
         resetButton();
         return;
     }
