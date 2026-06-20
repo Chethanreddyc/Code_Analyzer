@@ -6,9 +6,9 @@
   "permissions": ["scripting", "activeTab", "storage", "tabs"],
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://www.codechef.com/*",
+    "https://www.codechef.com/submit/*",
     "https://www.hackerrank.com/*",
-    "https://*/*"
+    "https://*/*" 
   ],
   "background": {
     "service_worker": "background.js"
